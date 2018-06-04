@@ -2,7 +2,7 @@ rm(list=ls())
 # devtools::install_github("koheiw/RSeleniumScraper")
 require(RSeleniumScraper)
 
-set_directory("data")
+set_directory("data") # we do not use this directory for KINDS
 open_browser("https://www.kinds.or.kr/")
 
 # You have to move to Detail Search and select source manually
