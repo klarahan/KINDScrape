@@ -1,54 +1,14 @@
 rm(list=ls())
 # devtools::install_github("koheiw/RSeleniumScraper")
 require(RSeleniumScraper)
+source("functions.R")
 
-set_directory("data") # we do not use this directory for KINDS
 open_browser("https://www.kinds.or.kr/")
 
 # You have to move to Detail Search and select source manually
 
-# elem <- get_driver()$findElement('xpath', ".//li[@class='topMenu1']")
-# elem$clickElement()
-# Sys.sleep(1)
-
-set_query <- function(query, date) {
-    elem <- get_driver()$findElement('xpath', ".//*[@id='searchDetailTxt1']")
-    elem$clearElement()
-    elem$sendKeysToElement(list(query))
-    
-    elem <- get_driver()$findElement('xpath', ".//*[@id='fromdate']")
-    elem$clearElement()
-    elem$sendKeysToElement(list(date[1]))
-    
-    elem <- get_driver()$findElement('xpath', ".//*[@id='todate']")
-    elem$clearElement()
-    elem$sendKeysToElement(list(date[2]))
-}
-
-submit <- function() {
-    Sys.sleep(1)
-    elem <- get_driver()$findElement('xpath', ".//*[@id='searchSubmit']")
-    elem$clickElement()
-}
-
-get_article <- function() {
-    # Extract data
-    date <- ""
-    
-    # Extract heading
-    elem <- get_driver()$findElement('xpath', ".//*[@id='pop_newsTitle']")
-    head <- elem$getElementText()[[1]]
-    
-    # Extract body
-    elem <- get_driver()$findElement('xpath', ".//*[@id='pop_newsContent']")
-    body <- elem$getElementText()[[1]]
-    
-    data.frame(page = i, head, body, date, stringsAsFactors = FALSE)
-}
-
 dates <- get_date_range("2013-01-01", "2013-12-31")
 query <- "북한"
-
 
 data <- data.frame()
 for (date in dates) {
